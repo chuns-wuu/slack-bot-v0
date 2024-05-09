@@ -3,7 +3,7 @@
 
 ## Overview
 
-This is a Slack app built with the [Bolt for JavaScript framework][2]
+This is a Slack app built with the [Bolt for JavaScript framework][2]. 
 
 ## Contributing
 
@@ -42,17 +42,23 @@ npm install
 export SLACK_BOT_TOKEN=<bot-token> # from the OAuth section
 export SLACK_SIGNING_SECRET=<signing-token> # from the Basic Info App Token Section
 
-# Run locally using serverless, which also requires AWS credentials
+# Running locally using serverless, which also requires AWS credentials
 export AWS_ACCESS_KEY_ID=<aws-user-access-key-id>
 export AWS_SECRET_ACCESS_KEY=<aws-user-secret-key>
 export AWS_DEFAULT_REGION=us-east-1
 
 brew install serverless
 
+serverless offline --noPrependStageInUrl
 
+# TODO: Find sample Slack events to try out in Postman locally
 
-
+# Deploy changes to the AWS Lambda function
+serverless deploy function -f slack
 ```
+### Tutorials
+[Getting started with Bolt and AWS Lambda][8]
+
 [1]: https://slack.dev/bolt-js/tutorial/getting-started
 [2]: https://slack.dev/bolt-js/
 [3]: https://slack.dev/bolt-js/tutorial/getting-started#setting-up-events
