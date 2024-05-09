@@ -3,7 +3,16 @@
 
 ## Overview
 
-This is a Slack app built with the [Bolt for JavaScript framework][2]. 
+This is a Slack app built with the [Bolt for JavaScript framework][2]. The original repo is the [bolt-js-getting-started-app][9].
+
+The slack-bot-v0 is a proof-of-concept project for summarizing threads in Slack. Some mentioned use cases that could help developers during incident response are:
+
+1. Annotate and collect shared observability links with what they are used for in a single place.
+2. Extract relevant information(screenshots, communication, timestamps, metrics, impact) from each Slack thread in the on-call or alert channels into a single place so that they can create Jira ticket or postmorterm Wiki based off it. 
+3. Keep track of the priority of the postmorterm action items 
+4. Correlate the new incident with the past incidents and provide suggestions.
+
+If there's any use case you think we should include but that's missing, please let us know!
 
 ## Contributing
 
@@ -67,3 +76,4 @@ serverless deploy function -f slack
 [6]: https://api.slack.com/apps/A072Z6STZKK/
 [7]: https://api.slack.com/interactivity/slash-commands#app_command_handling
 [8]: https://slack.dev/bolt-js/deployments/aws-lambda
+[9]: https://github.com/slackapi/bolt-js-getting-started-app
