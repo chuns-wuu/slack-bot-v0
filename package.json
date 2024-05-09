@@ -9,6 +9,11 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@slack/bolt": "^3.6.0"
+    "@slack/bolt": "^3.6.0",
+    "dotenv": "^16.4.5",
+    "find-config": "^1.0.0"
+  },
+  "devDependencies": {
+    "serverless-offline": "^13.5.0"
   }
 }
