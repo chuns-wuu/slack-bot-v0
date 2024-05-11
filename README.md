@@ -58,6 +58,12 @@ export AWS_DEFAULT_REGION=us-east-1
 
 brew install serverless
 
+serverless plugin install -n serverless-offline
+
+# Build the code
+# TODO (rajaram) automate the dev env
+npx webpack
+
 serverless offline --noPrependStageInUrl
 
 # TODO: Find sample Slack events to try out in Postman locally

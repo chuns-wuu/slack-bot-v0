@@ -1,3 +1,5 @@
+useDotenv: true
+
 service: webhook-test
 frameworkVersion: '3'
 provider:
