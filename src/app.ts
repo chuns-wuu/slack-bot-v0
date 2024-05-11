@@ -1,7 +1,6 @@
-import { App, AwsLambdaReceiver, LogLevel } from '@slack/bolt';
-import { AwsCallback, AwsEvent, AwsHandler } from '@slack/bolt/dist/receivers/AwsLambdaReceiver';
+import { App, AwsLambdaReceiver, LogLevel, Logger } from '@slack/bolt';
+import { AwsHandler } from '@slack/bolt/dist/receivers/AwsLambdaReceiver';
 
-// const { AwsLambdaReceiver } = require('@slack/bolt');
 require('dotenv').config({ path: require('find-config')('.env') })
 
 const awsLambdaReceiver = new AwsLambdaReceiver({
@@ -13,7 +12,6 @@ const app = new App({
   receiver: awsLambdaReceiver,
   logLevel: LogLevel.DEBUG,
 });
-
 
 // Listens to incoming messages that contain "hello"
 app.message('hello', async ({ message, say }) => {
@@ -56,7 +54,8 @@ app.message('goodbye', async ({ message, say }) => {
   }
 });
 
-export const handler: AwsHandler= async (event, context, callback) => {
+export const handler: AwsHandler = async (event, context, callback) => {
+  console.log("Hello in")
   const handler = await awsLambdaReceiver.start();
   return handler(event, context, callback);
 };
