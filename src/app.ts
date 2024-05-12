@@ -48,14 +48,17 @@ app.action('button_click', async ({ body, ack, say }) => {
 
 
 app.message('goodbye', async ({ message, say }) => {
-  // say() sends a message to the channel where the event was triggered
   if (message.subtype === undefined || message.subtype === 'bot_message') {
     await say(`See ya later, <@${message.user}> :wave:`);
   }
 });
 
+app.command('/summarize', async ({payload, ack, say}) =>{
+  await ack();
+  await say(`Hello ppl I am tring to summarize as per requested ${payload.command}`)
+})
+
 export const handler: AwsHandler = async (event, context, callback) => {
-  console.log("Hello in")
   const handler = await awsLambdaReceiver.start();
   return handler(event, context, callback);
 };

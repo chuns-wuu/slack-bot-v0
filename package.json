@@ -4,7 +4,9 @@
   "description": "Getting Started ⚡️ Bolt for JavaScript",
   "main": "dist/app.js",
   "scripts": {
-    "start": "node dist/app.js",
+    "build": "webpack --env production",
+    "start": "serverless offline --noPrependStageInUrl --verbose",
+    "deploy": "npm run build && serverless deploy function -f slack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "license": "MIT",
