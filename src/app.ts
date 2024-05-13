@@ -1,8 +1,6 @@
 import { App, AwsLambdaReceiver, LogLevel, Logger } from '@slack/bolt';
 import { AwsHandler } from '@slack/bolt/dist/receivers/AwsLambdaReceiver';
 
-require('dotenv').config({ path: require('find-config')('.env') })
-
 const awsLambdaReceiver = new AwsLambdaReceiver({
   signingSecret: process.env.SLACK_SIGNING_SECRET as string,
 });
@@ -40,23 +38,46 @@ app.message('hello', async ({ message, say }) => {
   }
 });
 
-app.action('button_click', async ({ body, ack, say }) => {
-  // Acknowledge the action
-  await ack();
-  await say(`<@${body.user.id}> clicked the button`);
+app.message(/.*/, async ({ message, say }) => {
+  // RegExp matches are inside of context.matches
+  await say(`${message.ts} is the thread ID`);
 });
 
+// app.action('button_click', async ({ body, ack, say }) => {
+//   // Acknowledge the action
+//   await ack();
+//   await say(`<@${body.user.id}> clicked the button`);
+// });
 
-app.message('goodbye', async ({ message, say }) => {
-  if (message.subtype === undefined || message.subtype === 'bot_message') {
-    await say(`See ya later, <@${message.user}> :wave:`);
-  }
-});
+
+// app.message('goodbye', async ({ message, say }) => {
+//   if (message.subtype === undefined || message.subtype === 'bot_message') {
+//     await say(`See ya later, <@${message.user}> :wave:`);
+//   }
+// });
 
 app.command('/summarize', async ({payload, ack, say}) =>{
   await ack();
+  console.log(payload)
   await say(`Hello ppl I am tring to summarize as per requested ${payload.command}`)
 })
+
+app.command('/summarize2', async ({ payload, client, logger, ack, say }) => {
+  try {
+    // Call chat.scheduleMessage with the built-in client
+    const result = await client.conversations.replies({
+      token: process.env.SLACK_BOT_TOKEN,
+      channel: payload.channel_id,
+      ts: payload.text
+    });
+
+    console.log(result);
+    await say(`thread results ${result}`)
+  }
+  catch (error) {
+    logger.error(error);
+  }
+});
 
 export const handler: AwsHandler = async (event, context, callback) => {
   const handler = await awsLambdaReceiver.start();
