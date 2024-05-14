@@ -78,7 +78,7 @@ serverless offline --noPrependStageInUrl
 # TODO: Find sample Slack events to try out in Postman locally
 
 # Deploy changes to the AWS Lambda function
-serverless deploy function -f slack
+serverless deploy
 ```
 
 ### Tutorials

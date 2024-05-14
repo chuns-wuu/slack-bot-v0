@@ -99,33 +99,34 @@ app.shortcut('thread_summary', async ({ shortcut, ack, client, logger }) => {
               "emoji": true
             }
           },
-          {
-            "block_id": "recipient_list_input",
-            "type": "section",
-            "text": {
-              "type": "mrkdwn",
-              "text": "Recipients"
-            },
-            "accessory": {
-              "type": "multi_static_select",
-              "placeholder": {
-                "type": "plain_text",
-                "text": "Select who to send the summary to",
-                "emoji": true
-              },
-              "options": [
-                {
-                  "text": {
-                    "type": "plain_text",
-                    "text": "The current message thread",
-                    "emoji": true
-                  },
-                  "value": "thrad"
-                }
-              ],
-              "action_id": "recipient_list"
-            }
-          },
+          // TODO: adding the dropdown block will cause a handler not found error, need to figure out a fix
+          // {
+          //   "block_id": "recipient_list_input",
+          //   "type": "section",
+          //   "text": {
+          //     "type": "mrkdwn",
+          //     "text": "Recipients"
+          //   },
+          //   "accessory": {
+          //     "type": "multi_static_select",
+          //     "placeholder": {
+          //       "type": "plain_text",
+          //       "text": "Select who to send the summary to",
+          //       "emoji": true
+          //     },
+          //     "options": [
+          //       {
+          //         "text": {
+          //           "type": "plain_text",
+          //           "text": "The current message thread",
+          //           "emoji": true
+          //         },
+          //         "value": "thrad"
+          //       }
+          //     ],
+          //     "action_id": "recipient_list"
+          //   }
+          // },
         ],
         "type": "modal"
       }
@@ -141,28 +142,21 @@ app.shortcut('thread_summary', async ({ shortcut, ack, client, logger }) => {
 app.view('incident_summary_submit', async ({ ack, body, view, client, logger }) => {
   // Acknowledge the view_submission request
   await ack()
+ 
+  const threadid = view['state']['values']['thread_id_input']['thread_id'].value
 
-  logger.info(view)
-  logger.info(body)
-  // Do whatever you want with the input data - here we're saving it to a DB then sending the user a verification of their submission
-
-  // Assume there's an input block with `block_1` as the block_id and `input_a`
-  // const threadid = view['state']['values']['thread_id_input']['thread_id']
-  // const receipient = view['state']['values']['recipient_list_input']['recipient_list']
-
-  // logger.info(threadid)
-  // logger.info(receipient)
-
-  // // Message the user
-  // try {
-  //   await client.chat.postMessage({
-  //     channel: threadid,
-  //     text: "submitted successfully!!"
-  //   });
-  // }
-  // catch (error) {
-  //   logger.error(error);
-  // }
+  // Message the user
+  try {
+    const result = await client.chat.postMessage({
+      channel:  body['user'].id,
+      text: "The thread is being summarized...",
+      thread_ts: threadid || body['user'].id
+    });
+    logger.info(result);
+  }
+  catch (error) {
+    logger.error(error);
+  }
 
 });
 
