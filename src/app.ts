@@ -1,6 +1,8 @@
 import { App, AwsLambdaReceiver, LogLevel, Logger } from '@slack/bolt';
 import { AwsHandler } from '@slack/bolt/dist/receivers/AwsLambdaReceiver';
 
+const API_URL = "https://oulgrtv8x8.execute-api.us-east-1.amazonaws.com/dev/api/file"
+
 const awsLambdaReceiver = new AwsLambdaReceiver({
   signingSecret: process.env.SLACK_SIGNING_SECRET as string,
 });
@@ -49,22 +51,56 @@ app.command('/summarize', async ({payload, ack, say}) =>{
   await say(`Hello ppl I am tring to summarize as per requested ${payload.command}`)
 })
 
-app.command('/summarize2', async ({ payload, client, logger, ack, say }) => {
-  try {
-    // Call chat.scheduleMessage with the built-in client
-    const result = await client.conversations.replies({
-      token: process.env.SLACK_BOT_TOKEN,
-      channel: payload.channel_id,
-      ts: payload.text
-    });
 
-    console.log(result);
-    await say(`thread results ${result}`)
+app.event('file_shared', async ({ event, client, logger }) => {
+  try {
+    const file = await app.client.files.info({
+      token: process.env.SLACK_BOT_TOKEN,
+      file: event['file_id']
+    })
+    const data = {
+      file_url: file.file?.url_private_download,
+      channel: event['user_id']
+    }
+    const request: RequestInfo = new Request(new URL(API_URL), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    const response = await fetch(request)
+    if (!response.ok) {
+      throw new Error(`Error while calling downstream API. Status: ${response.status}`);
+    }
+    await client.chat.postMessage({
+      channel: event['user_id'],
+      text: "a file was just shared successfully!"
+    });
   }
   catch (error) {
     logger.error(error);
   }
 });
+
+
+
+// app.command('/summarize2', async ({ payload, client, logger, ack, say }) => {
+//   try {
+//     // Call chat.scheduleMessage with the built-in client
+//     const result = await client.conversations.replies({
+//       token: process.env.SLACK_BOT_TOKEN,
+//       channel: payload.channel_id,
+//       ts: payload.text
+//     });
+
+//     console.log(result);
+//     await say(`thread results ${result}`)
+//   }
+//   catch (error) {
+//     logger.error(error);
+//   }
+// });
 
 app.shortcut('thread_summary', async ({ shortcut, ack, client, logger }) => {
 
@@ -143,6 +179,7 @@ app.view('incident_summary_submit', async ({ ack, body, view, client, logger }) 
   // Acknowledge the view_submission request
   await ack()
  
+  //const threadid = view['state']['values']['thread_id_input']['thread_id'].value
   const threadid = view['state']['values']['thread_id_input']['thread_id'].value
 
   // Message the user

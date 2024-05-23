@@ -15,5 +15,12 @@ functions:
       - http:
           path: slack/events
           method: post
+  api:
+    handler: dist/api.handler
+    events:
+      - http:
+          path: api/file
+          method: post
 plugins:
   - serverless-offline
+ 
