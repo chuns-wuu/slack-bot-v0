@@ -1,0 +1,5 @@
+create a system architecture design document that describes the workflows, use cases and components of the whisper lambda function based on the original paragraph as much as possible, and do not provide extra context. describe what each component does, and how they interact with each other, and the goal of these interactions. only keep the content specific to lambda function's use case, not the deployment steps.
+
+create a very engaging, educational and short step-by-step deployment guide for lambda to ECR based on the original paragraph as much as possible unless there are redundant information in between the sentences, in which case you must only keep one of the redundant steps, and do provide extra context by making the steps' procedures and goals clearer. 
+
+create a very short step-by-step quick fix for the 'unable to locate credential' error based on the original paragraph as much as possible unless there are redundant information in between the sentences, in which case you must only keep one of the redundant steps, and do not provide extra context or references. 

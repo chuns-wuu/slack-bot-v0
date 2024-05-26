@@ -1,4 +1,10 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
+// import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
+
+// const client = new S3Client({});
+
+
+
 
 async function getFiles(token: String, fileLink: URL) {
 
@@ -19,14 +25,27 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     // Log the event for debugging
     console.log("Received event:", JSON.stringify(event, null, 2));
 
-    // Perform the business logic here
-    const responseMessage = "Successfully shared a file!";
+    // const command = new GetObjectCommand({
+    //     Bucket: "slack-documents",
+    //     Key: "document.md",
+    //   });
+    
+    // var responseMessage
+    // try {
+    //     const response = await client.send(command);
+    //     // The Body object also has 'transformToByteArray' and 'transformToWebStream' methods.
+    //     var responseMessage = await response.Body
+    //     const documentStr = responseMessage.transformToString();
+    //     console.log(documentStr);
+    // } catch (err) {
+    //     console.error(err);
+    // }
 
     // Create the response object
     const response: APIGatewayProxyResult = {
         statusCode: 200,
         body: JSON.stringify({
-            message: responseMessage
+            message: "OK"
         }),
     };
 
