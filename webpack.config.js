@@ -7,10 +7,13 @@ module.exports = (env) => {
     const isProd = !isDev
     const config = {
         target: 'node',
-        entry: "./src/app.ts",
+        entry: {
+            app: "./src/app.ts", 
+            api: "./src/api.ts"
+        },
         output: {
             path: path.resolve(__dirname, 'dist'), // Output directory
-            filename: 'app.js', // Output filename
+            filename: '[name].js', // Output filename
             libraryTarget: 'commonjs2'
         },
         // Enable sourcemaps for debugging webpack's output.

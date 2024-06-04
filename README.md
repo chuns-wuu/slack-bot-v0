@@ -56,6 +56,15 @@ export AWS_ACCESS_KEY_ID=<aws-user-access-key-id>
 export AWS_SECRET_ACCESS_KEY=<aws-user-secret-key>
 export AWS_DEFAULT_REGION=us-east-1
 
+# Test out a single .ts file
+npx tsx src/app.ts 
+
+```
+
+### 3. Deploy changes to Lambda
+
+```zsh
+
 brew install serverless
 
 serverless plugin install -n serverless-offline
@@ -69,8 +78,9 @@ serverless offline --noPrependStageInUrl
 # TODO: Find sample Slack events to try out in Postman locally
 
 # Deploy changes to the AWS Lambda function
-serverless deploy function -f slack
+serverless deploy
 ```
+
 ### Tutorials
 [Getting started with Bolt and AWS Lambda][8]
 
