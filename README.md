@@ -16,7 +16,9 @@ If there's any use case you think we should include but that's missing, please l
 
 ## Demo
 
-[Watch the demo on Loom](https://www.loom.com/share/10ed11401ffe4467a295c3dd097540e1)
+[![Demo: the bot turning Slack threads into shareable docs](screenshot.png)](https://www.loom.com/share/10ed11401ffe4467a295c3dd097540e1)
+
+▶️ [Watch the demo on Loom](https://www.loom.com/share/10ed11401ffe4467a295c3dd097540e1)
 
 ## Contributing
 
