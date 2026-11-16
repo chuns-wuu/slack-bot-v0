@@ -14,6 +14,10 @@ The slack-bot-v0 is a proof-of-concept project for summarizing threads in Slack.
 
 If there's any use case you think we should include but that's missing, please let us know!
 
+## Demo
+
+[Watch the demo on Loom](https://www.loom.com/share/10ed11401ffe4467a295c3dd097540e1)
+
 ## Contributing
 
 ### 0. Try it out
